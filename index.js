@@ -6,15 +6,7 @@ const pathName = path.join('./', fileName);
 const kargerMincut = require('./karger-mincut');
 const nodes = [];
 
-const counter = function (arr) {
-    const comparsionsFirst = quicksorts.first(arr.slice());
-    console.log('first: ' + comparsionsFirst);
-
-    const comparsionsFinal = quicksorts.final(arr.slice());
-    console.log('final: ' + comparsionsFinal);
-
-    const comparsionsMedian = quicksorts.median(arr.slice());
-    console.log('median: ' + comparsionsMedian);
+const counter = function (nodes) {
 
 };
 
