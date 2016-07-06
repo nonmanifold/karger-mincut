@@ -1,0 +1,11 @@
+{
+  "name": "karger-mincut",
+  "version": "1.0.0",
+  "description": "Karger min cut for adjacency list representation of a simple undirected graph.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "author": "Nick Serebrennikov",
+  "license": "MIT"
+}
