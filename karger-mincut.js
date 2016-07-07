@@ -1,16 +1,18 @@
-function chooseEdge(nodes) {
-    //choose first node
-    const vertices = Object.keys(nodes);
-    if (vertices.length < 2) {
-        return false; //no more edges to contract
-    } else {
-        const rnd = Math.random();
-        const sourceId = vertices[Math.floor(rnd * vertices.length)];
-        const possibleEnds = nodes[sourceId];
-        const targetId = possibleEnds[Math.floor(rnd * possibleEnds.length)];
-        //returning pair of nodes to fuse together
-        return [sourceId, targetId];
-    }
+function getChooserEdgeWith(randomFn) {
+    return function (nodes) {
+        //choose first node
+        const vertices = Object.keys(nodes);
+        if (vertices.length < 2) {
+            return false; //no more edges to contract
+        } else {
+            const rnd = randomFn();
+            const sourceId = vertices[Math.floor(rnd * vertices.length)];
+            const possibleEnds = nodes[sourceId];
+            const targetId = possibleEnds[Math.floor(rnd * possibleEnds.length)];
+            //returning pair of nodes to fuse together
+            return [sourceId, targetId];
+        }
+    };
 }
 
 function removeSelfLoops(vertexLabel, neighbors) {
@@ -42,8 +44,22 @@ function contractEdge(nodes, sourceId, targetId) {
     return nodes;
 }
 
+function findMinCuts(nodes, edgeChooser) {
+    while (Object.keys(nodes).length > 2) {
+        var edge = edgeChooser(nodes);
+        contractEdge(nodes, edge[0], edge[1]);
+    }
+    const remainingSuperVerticiesLabels = Object.keys(nodes);
+    const firstSuperVertexId = remainingSuperVerticiesLabels[0];
+    return nodes[firstSuperVertexId].length;
+}
+
 module.exports = {
-    chooseEdge: chooseEdge,
+    chooseEdgeRandom: getChooserEdgeWith(Math.random),
+    chooseFirstEdge: getChooserEdgeWith(function () {
+        return 0;
+    }),
     removeSelfLoops: removeSelfLoops,
-    contractEdge: contractEdge
+    contractEdge: contractEdge,
+    findMinCuts: findMinCuts
 };
