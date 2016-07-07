@@ -1,7 +1,16 @@
 function chooseEdge(nodes) {
     //choose first node
-
-    //returning pair of nodes to fuse together
+    const vertices = Object.keys(nodes);
+    if (vertices.length < 2) {
+        return false; //no more edges to contract
+    } else {
+        const rnd = Math.random();
+        const sourceId = vertices[Math.floor(rnd * vertices.length)];
+        const possibleEnds = nodes[sourceId];
+        const targetId = possibleEnds[Math.floor(rnd * possibleEnds.length)];
+        //returning pair of nodes to fuse together
+        return [sourceId, targetId];
+    }
 }
 
 function removeSelfLoops(vertexLabel, neighbors) {
