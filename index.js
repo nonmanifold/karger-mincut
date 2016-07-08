@@ -33,7 +33,7 @@ const rl = readline.createInterface({
 rl.on('line', function (line) {
     const row = line.split("\t");
     const vertLabel = row[0];
-    nodes[vertLabel] = row.slice(1, row.length - 1);// cut off first element, containing node label and las one after lat TAB char
+    nodes[vertLabel] = row.slice(1, row.length - 1);// cut off first element, containing node label and las one after last TAB char
 });
 rl.on('close', function () {
     counter(nodes);
