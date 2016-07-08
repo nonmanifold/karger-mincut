@@ -21,18 +21,22 @@ function removeSelfLoops(vertexLabel, neighbors) {
     }
     return neighbors; // actually, neighbors are edited in place
 }
-
+function replaceVerexIds(verticies, fromId, toId) {
+    for (var i = 0; i < verticies.length; i++) {
+        if (verticies[i] === fromId) {
+            verticies[i] = toId;
+        }
+    }
+    return verticies;
+}
 function contractEdge(nodes, sourceId, targetId) {
     const targetNeighbors = nodes[targetId];
-    // first delete sourceId from target's neighbors
-    removeSelfLoops(sourceId, targetNeighbors);
+    // replace sourceId with targetId in target's neighbors, since its the new label of the united vertex
+    //replaceVerexIds(targetNeighbors, sourceId, targetId);
     // update source's neighbors to point to new target, replacing label sourceId with targetId
     const sourceNeighbors = nodes[sourceId];
     sourceNeighbors.forEach(function (neighborId) {
-        const neighbor = nodes[neighborId];
-        while (neighbor.indexOf(sourceId) >= 0) {
-            neighbor[neighbor.indexOf(sourceId)] = targetId;
-        }
+        replaceVerexIds(nodes[neighborId], sourceId, targetId);
     });
     // add to target's neighbors list neighbors from source's list
     Array.prototype.push.apply(targetNeighbors, sourceNeighbors);
@@ -61,5 +65,6 @@ module.exports = {
     }),
     removeSelfLoops: removeSelfLoops,
     contractEdge: contractEdge,
-    findMinCuts: findMinCuts
+    findMinCuts: findMinCuts,
+    replaceVerexIds:replaceVerexIds
 };

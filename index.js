@@ -5,6 +5,7 @@ const fileName = '_f370cd8b4d3482c940e4a57f489a200b_kargerMinCut.txt';
 const pathName = path.join('./', fileName);
 const kargerMincut = require('./karger-mincut');
 const chooseEdgeRandom = kargerMincut.chooseEdgeRandom;
+const chooseFirstEdge = kargerMincut.chooseFirstEdge;
 const findMinCuts = kargerMincut.findMinCuts;
 
 const nodes = {};
@@ -32,7 +33,7 @@ const rl = readline.createInterface({
 rl.on('line', function (line) {
     const row = line.split("\t");
     const vertLabel = row[0];
-    nodes[vertLabel] = row.slice(1, row.length - 2);// cut off first element, containing node label and las one after lat TAB char
+    nodes[vertLabel] = row.slice(1, row.length - 1);// cut off first element, containing node label and las one after lat TAB char
 });
 rl.on('close', function () {
     counter(nodes);
